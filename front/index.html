@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Menú de Heladería</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f4f4;
+      margin: 0;
+      padding: 20px;
+    }
+    h1 {
+      color: #333;
+    }
+    .productos {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      margin-top: 20px;
+    }
+    .producto {
+      background: #fff;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+      width: 260px;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      transition: box-shadow 0.2s;
+    }
+    .producto img {
+      width: 120px;
+      height: 120px;
+      object-fit: cover;
+      border-radius: 6px;
+      margin-bottom: 12px;
+    }
+    .producto h2 {
+      font-size: 1.2em;
+      margin: 0 0 8px 0;
+      color: #222;
+    }
+    .producto .categoria {
+      font-size: 0.9em;
+      color: #888;
+      margin-bottom: 8px;
+    }
+    .producto .descripcion {
+      font-size: 1em;
+      color: #444;
+      margin-bottom: 10px;
+      text-align: center;
+    }
+    .producto .precio {
+      font-weight: bold;
+      color: #0074D9;
+      margin-bottom: 8px;
+    }
+    .producto .disponible {
+      color: #27ae60;
+      font-weight: bold;
+    }
+    .producto .no-disponible {
+      color: #c0392b;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <h1>Menú de Heladería</h1>
+  <div class="productos" id="productos"></div>
+
+  <script>
+    // Cambia la URL por la de tu API real
+    const API_URL = '/api/v1/helados';
+
+    async function cargarProductos() {
+      try {
+        const resp = await fetch(API_URL);
+        const productos = await resp.json();
+
+        const contenedor = document.getElementById('productos');
+        contenedor.innerHTML = '';
+
+        productos.forEach(prod => {
+          const div = document.createElement('div');
+          div.className = 'producto';
+
+          div.innerHTML = `
+            <img src="productos/${prod.imagen}" alt="${prod.nombre}">
+            <h2>${prod.nombre}</h2>
+            <div class="categoria">${prod.categoria}</div>
+            <div class="descripcion">${prod.descripcion}</div>
+            <div class="precio">$${prod.precio}</div>
+            <div class="${prod.disponibilidad ? 'disponible' : 'no-disponible'}">
+              ${prod.disponibilidad ? 'Disponible' : 'No disponible'}
+            </div>
+          `;
+          contenedor.appendChild(div);
+        });
+      } catch (error) {
+        alert('Error al cargar los productos');
+        console.error(error);
+      }
+    }
+
+    cargarProductos();
+  </script>
+</body>
+</html>

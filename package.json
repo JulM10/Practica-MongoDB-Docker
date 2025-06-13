@@ -1,0 +1,19 @@
+{
+  "name": "c15-4mod-exp-bd",
+  "version": "1.0.0",
+  "main": "index.mjs",
+  "scripts": {
+    "dev": "nodemon main"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "express": "^4.21.0",
+    "mongodb": "^6.10.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.7"
+  }
+}

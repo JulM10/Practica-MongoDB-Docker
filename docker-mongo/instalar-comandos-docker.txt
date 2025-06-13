@@ -1,0 +1,43 @@
+/// Crear la imagen
+docker build -t imagen_mongo .
+
+/// Instanciar un contenedor a partir de la imagen
+docker run -d --name contenedor_mongo -p 27017:27017 imagen_mongo
+
+/// Verificar la cracion de la Base de Datos y la tabla
+
+////// Entrar al contenedor
+docker exec -it contenedor_mongo bash
+
+////// Dentro del contenedor ejecutar:
+mongosh
+
+////// O directamente entrar a la consola de mongosh
+docker exec -it contenedor_mongo mongosh
+
+////// Ejecutar consulta
+test> use tienda
+tienda> db.productos.find()
+
+////// debemos ver los productos... por ejemplo:
+ [
+  {
+    _id: ObjectId('6835b86550da64560fc59f35'),
+    nombre: 'Helado de Chocolate',
+    descripcion: 'Helado de chocolate belga con trozos de cacao',
+    precio: 150.5,
+    categoria: 'Helado',
+    disponibilidad: true,
+    imagen: 'chocolate.jpg'
+  },
+  {
+    _id: ObjectId('6835b86550da64560fc59f36'),
+    nombre: 'Helado de Vainilla',
+    descripcion: 'Helado de vainilla con extracto natural de vainilla bourbon',
+    precio: 140,
+    categoria: 'Helado',
+    disponibilidad: true,
+    imagen: 'vainilla.jpg'
+  },
+
+...
